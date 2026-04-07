@@ -112,7 +112,7 @@
 
     <!-- BOTON -->
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/registroButton"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
