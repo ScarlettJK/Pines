@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment"
+    tools:context=".RegisterFragment"
     android:orientation="horizontal">
+
+
 
     <!-- VISTA AZUL -->
     <View
@@ -13,11 +15,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#00BCD4"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/view2"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.4"/>
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- VISTA BLANCA -->
     <View
@@ -30,6 +32,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconTint="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- ICONO -->
     <ImageView
         android:id="@+id/imgLogo"
@@ -38,10 +52,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/butterfly"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"/>
 
     <!-- TITULO -->
     <TextView
@@ -53,10 +65,8 @@
         android:text="Bienvenido!"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgLogo" />
+        app:layout_constraintTop_toBottomOf="@id/imgLogo"/>
 
     <!-- SUBTITULO -->
     <TextView
@@ -65,11 +75,27 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Inicia sesión para continuar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:text="Regístrate para continuar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTitulo" />
+        app:layout_constraintTop_toBottomOf="@id/txtTitulo"/>
+
+    <!-- NOMBRE -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Nombre"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- CORREO -->
     <com.google.android.material.textfield.TextInputLayout
@@ -79,73 +105,49 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/correo"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Correo"
+        app:layout_constraintTop_toBottomOf="@id/textFieldNombre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view1">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- CONTRASEÑA -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldContraseña"
+        android:id="@+id/textFieldPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/contraseña"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Contraseña"
+        app:layout_constraintTop_toBottomOf="@id/textFieldCorreo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldCorreo">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- BOTON -->
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnRegistrar"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#00BCD4"
-        android:text="Ingresar"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Registrar"
+        app:layout_constraintTop_toBottomOf="@id/textFieldPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldContraseña" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- REGISTRARSE -->
-    <TextView
-        android:id="@+id/txtRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Registrarse"
-        android:textColor="#00BCD4"
-        app:layout_constraintBottom_toBottomOf="@id/view2"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- RECUPERAR -->
-    <TextView
-        android:id="@+id/txtRecuperar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Restablecer contraseña"
-        android:textColor="#00BCD4"
-        app:layout_constraintBottom_toBottomOf="@id/view2"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
