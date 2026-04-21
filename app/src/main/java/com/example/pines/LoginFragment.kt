@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.pines.databinding.FragmentLoginBinding
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import com.example.pines.core.FragmentCommunicator
 
 /*
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +35,8 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<SignInViewModel>()
 
+    private lateinit var communicator: FragmentCommunicator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /*
@@ -53,6 +56,10 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         setupValidation()
+        //Implementacion communicator
+        communicator = requireActivity() as FragmentCommunicator
+        //Ejecucion communicator
+        communicator.manageLoader(isVisible = true)
         binding.txtRegistro.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment) //Busca el grafo de navegacion que esta enlazado al
         }

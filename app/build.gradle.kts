@@ -52,4 +52,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //SE AÑADIÓ LOTTIE 21/04/2026
+    implementation(libs.lottie)
 }
