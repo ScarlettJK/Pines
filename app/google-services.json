@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "250327229576",
+    "project_id": "pines-6ecf3",
+    "storage_bucket": "pines-6ecf3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250327229576:android:0bc57389ca96da2290ab3d",
+        "android_client_info": {
+          "package_name": "com.example.pines"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRo7R0kJZ8G5nTsff29M1wgxZLmcYo0gc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

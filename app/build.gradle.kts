@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    //SE AÑADE FIREBASE - se agrega plugim
+    alias(libs.plugins.firebase)
 }
 
 android {
@@ -54,4 +56,11 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //SE AÑADIÓ LOTTIE 21/04/2026
     implementation(libs.lottie)
+    //SE AÑADE FIREBASE - se implementa
+    //implementation("com.google.firebase:firebase-bom:34.12.0")
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+
+//
 }
