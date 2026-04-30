@@ -10,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.pines.SignInViewModel
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
 import com.example.pines.databinding.FragmentRegisterBinding
@@ -84,7 +83,7 @@ class RegisterFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.registerState.collect { state ->
                     when (state) {
-                        is ResponseService.loading -> {
+                        is ResponseService.Loading -> {
                             communicator.manageLoader(true)
                             binding.signUpButton.isEnabled = false
                         }

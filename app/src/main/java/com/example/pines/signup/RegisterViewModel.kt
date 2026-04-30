@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.descriptors.PrimitiveKind
 
 class RegisterViewModel: ViewModel() {
     private val authRepository = AuthRepository()
@@ -39,7 +38,7 @@ class RegisterViewModel: ViewModel() {
     // --- Operacion de registro ---
     fun requestSignUp(email: String, password: String) {
         viewModelScope.launch {
-            _registerState.value = ResponseService.loading
+            _registerState.value = ResponseService.Loading
             _registerState.value = authRepository.requestSignUp(email, password)
         }
     }

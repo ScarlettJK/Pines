@@ -34,8 +34,7 @@ class AuthRepository(): Authentication {
     }
 
     override suspend fun requestSignUp(
-        email: String,
-        password: String
+        email: String, password: String
     ): ResponseService<FirebaseUser> = withContext(Dispatchers.IO) {
         try {
             val result = auth.signInWithEmailAndPassword(email, password).await()
