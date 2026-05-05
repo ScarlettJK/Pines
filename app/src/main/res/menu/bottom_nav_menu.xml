@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/account_ic"
+        android:title="Account"/>
+
+    <item
+        android:id="@+id/boardsFragment"
+        android:icon="@drawable/boards_ic"
+        android:title="Boards"/>
+
+    <item
+        android:id="@+id/feedFragment"
+        android:icon="@drawable/feed_ic"
+        android:title="Feed"/>
+
+
+
+</menu>

@@ -1,5 +1,6 @@
 package com.example.pines
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,9 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.pines.R
+//import com.example.pines.onboarding.signIn.SignInViewModel
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
 import com.example.pines.databinding.FragmentLoginBinding
+import com.example.pines.home.HomeActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -97,7 +101,9 @@ class LoginFragment : Fragment() {
 
                         is ResponseService.Success -> {
                             communicator.manageLoader(false)
-                            //TODO: navegar a Main activity
+                            val intent = Intent(requireContext(), HomeActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
                         }
 
                         is ResponseService.Error -> {
