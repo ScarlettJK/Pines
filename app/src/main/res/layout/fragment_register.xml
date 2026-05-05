@@ -137,6 +137,31 @@
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPasswordTil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Confirmar contraseña"
+        app:layout_constraintTop_toBottomOf="@id/passwordTil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPasswordTiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
     <!-- BOTON -->
     <Button
         android:id="@+id/signUpButton"
@@ -147,9 +172,11 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="#00BCD4"
         android:text="Registrar"
-        app:layout_constraintTop_toBottomOf="@id/passwordTil"
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordTil"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
 
 

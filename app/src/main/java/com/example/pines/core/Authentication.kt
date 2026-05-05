@@ -6,6 +6,6 @@ interface Authentication {
 
     suspend fun requestLogin(email: String, password: String): ResponseService<FirebaseUser>
 
-    suspend fun requestSignUp(email: String, password: String): r
+    suspend fun requestSignUp(email: String, password: String): ResponseService<FirebaseUser>
 
 }

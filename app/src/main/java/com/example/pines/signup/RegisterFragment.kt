@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.pines.SignInViewModel
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
 import com.example.pines.databinding.FragmentRegisterBinding
@@ -20,11 +21,8 @@ class RegisterFragment : Fragment() {
 
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel by viewModels<RegisterViewModel>()
-
     private lateinit var communicator: FragmentCommunicator
-
 
 
     override fun onCreateView(
@@ -33,9 +31,6 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        //binding.signUpButton.setOnClickListener { //In ?
-            //viewModel.requestSignUp(binding.emailTiet.text.toString().trim(), binding.passwordTiet.text.toString().trim())
-        //}
         communicator = requireActivity() as FragmentCommunicator
         setupValidation()
         setupClickListeners()
@@ -73,7 +68,7 @@ class RegisterFragment : Fragment() {
             val password = binding.passwordTiet.text.toString().trim()
             viewModel.requestSignUp(email, password)
         }
-        binding.registerText.setOnClickListener{
+        binding.registerText.setOnClickListener{ //ya tienes cuenta? inicia sesion
             findNavController().navigateUp()
         }
     }
@@ -88,8 +83,8 @@ class RegisterFragment : Fragment() {
                             binding.signUpButton.isEnabled = false
                         }
                         is ResponseService.Success -> {
-                            communicator.manageLoader(true)
-                            binding.signUpButton.isEnabled = false
+                            communicator.manageLoader(false)
+                            //binding.signUpButton.isEnabled = false
                             // TODO: navegar a pantalla de datos personales
                         }
                         is ResponseService.Error -> {

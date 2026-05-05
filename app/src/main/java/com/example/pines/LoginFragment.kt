@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.pines.core.FragmentCommunicator
@@ -44,11 +45,6 @@ class LoginFragment : Fragment() {
         //Implementacion communicator
         communicator = requireActivity() as FragmentCommunicator
         setupValidation()
-        //Ejecucion communicator
-
-        //binding.txtRegistro.setOnClickListener {
-            //findNavController().navigate(R.id.action_loginFragment_to_registerFragment) //Busca el grafo de navegacion que esta enlazado al
-        //}
         setupClickListeners()
         observeState()
 
@@ -57,17 +53,6 @@ class LoginFragment : Fragment() {
 
     private fun setupValidation() {
         binding.signInButton.isEnabled = false
-        /*
-        binding.emailTiet.addTextChangedListener {
-            validateFields()
-
-        }
-
-        binding.passwordTiet.addTextChangedListener {
-            validateFields()
-
-        }
-        */
         binding.emailTiet.addTextChangedListener { validateAndEnable() }
         binding.passwordTiet.addTextChangedListener { validateAndEnable() }
 
@@ -76,36 +61,23 @@ class LoginFragment : Fragment() {
     private fun validateAndEnable() {
         val email = binding.emailTiet.text.toString().trim()
         val password = binding.passwordTiet.text.toString().trim()
-        /*
-        val isEmailValid = isValidEmail(email)
-        val isPasswordValid = password.length >= 8
-
-        binding.emailTil.error = if (email.isEmpty() || isEmailValid) null else "Correo invalido"
-        binding.passwordTil.error = if (password.isEmpty() || isPasswordValid) null else "Minimo 8 caracteres"
-        */
 
         binding.emailTil.error = viewModel.validateEmail(email)
         binding.passwordTil.error = viewModel.validatePassword(password)
         binding.signInButton.isEnabled = viewModel.isLoginFormValid(email, password)
-
-        /*
-        binding.signInButton.isEnabled =
-            email.isNotEmpty() && password.isNotEmpty() && isEmailValid && isPasswordValid
     }
-    */
-        }
 
-        private fun setUpClickListeners(){
+    private fun setupClickListeners() {
         binding.signInButton.setOnClickListener {
             val email = binding.emailTiet.text.toString().trim()
             val password = binding.passwordTiet.text.toString().trim()
             viewModel.requestLogin(email, password)
         }
-            binding.registertext.setOnClickListener {
-                findNavController()
-                    .navigate(R.id.action_loginFragment_to_registerFragment)
-            }
+        binding.registerText.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_loginFragment_to_registerFragment)
         }
+    }
 
     /*
     private fun isValidEmail(email: String): Boolean {
@@ -115,23 +87,28 @@ class LoginFragment : Fragment() {
 
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(lifecycle.state.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.signInState.collect { state ->
                     when (state) {
                         is ResponseService.Loading -> {
                             communicator.manageLoader(true)
                             binding.signInButton.isEnabled = false
                         }
+
                         is ResponseService.Success -> {
                             communicator.manageLoader(false)
                             //TODO: navegar a Main activity
                         }
+
                         is ResponseService.Error -> {
                             communicator.manageLoader(false)
-                            binding.signInButton.isEnabled  true
-                            Snackbar.make(binding.root, state.error,
-                                Snackbar.LENGTH_LONG).show()
+                            binding.signInButton.isEnabled = true
+                            Snackbar.make(
+                                binding.root, state.error,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
+
                         null -> Unit
                     }
                 }
@@ -139,4 +116,4 @@ class LoginFragment : Fragment() {
         }
     }
 
-    }
+}

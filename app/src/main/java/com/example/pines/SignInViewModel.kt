@@ -17,7 +17,7 @@ class SignInViewModel: ViewModel() {
 
     //fun requestSignUp(email: String, password: String) {
         private val _signInState = MutableStateFlow<ResponseService<FirebaseUser>?>(null)
-        val SignInState: StateFlow<ResponseService<FirebaseUser>?> = _signInState.asStateFlow()
+        val signInState: StateFlow<ResponseService<FirebaseUser>?> = _signInState.asStateFlow()
         fun validateEmail(email: String): String? {
             if (email.isBlank()) return  "El correo es requerido"
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
