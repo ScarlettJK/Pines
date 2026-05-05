@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup.RegisterFragment"
+    tools:context=".onboarding.signUp.RegisterFragment"
     android:orientation="horizontal">
 
 
@@ -106,7 +106,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Correo"
+        android:hint="Correo:"
         app:layout_constraintTop_toBottomOf="@id/nombreTil"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -125,7 +125,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Contraseña"
+        android:hint="Contraseña:"
         app:layout_constraintTop_toBottomOf="@id/emailTil"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -160,8 +160,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
     <!-- BOTON -->
     <Button
         android:id="@+id/signUpButton"
@@ -177,6 +175,19 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
+    <TextView
+        android:id="@+id/registerText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="¿Ya tienes cuenta? Inicia sesión"
+        android:textAlignment="center"
+        android:textColor="#00BCD4"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

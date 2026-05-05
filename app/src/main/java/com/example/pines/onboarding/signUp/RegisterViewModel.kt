@@ -1,5 +1,6 @@
-package com.example.pines.signup
+package com.example.pines.onboarding.signUp
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pines.core.AuthRepository
@@ -9,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import android.util.Patterns
 
 class RegisterViewModel: ViewModel() {
     private val authRepository = AuthRepository()

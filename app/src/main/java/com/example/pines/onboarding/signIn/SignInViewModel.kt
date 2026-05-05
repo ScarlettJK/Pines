@@ -1,5 +1,4 @@
-package com.example.pines
-
+package com.example.pines.onboarding.signIn
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel

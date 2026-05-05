@@ -1,42 +1,29 @@
-package com.example.pines
+package com.example.pines.onboarding.signUp
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.pines.R
-//import com.example.pines.onboarding.signIn.SignInViewModel
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
-import com.example.pines.databinding.FragmentLoginBinding
-import com.example.pines.home.HomeActivity
+import com.example.pines.databinding.FragmentRegisterBinding
+import com.example.pines.onboarding.signUp.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
+class RegisterFragment : Fragment() {
 
-
-
-class LoginFragment : Fragment() {
-
-
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<SignInViewModel>()
+    private val viewModel by viewModels<RegisterViewModel>()
     private lateinit var communicator: FragmentCommunicator
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
 
     override fun onCreateView(
@@ -44,77 +31,69 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        //Implementacion communicator
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         communicator = requireActivity() as FragmentCommunicator
         setupValidation()
         setupClickListeners()
         observeState()
-
         return binding.root
     }
 
+
     private fun setupValidation() {
-        binding.signInButton.isEnabled = false
+        binding.signUpButton.isEnabled = false
+        val watcher = { validateAndEnable() }
         binding.emailTiet.addTextChangedListener { validateAndEnable() }
         binding.passwordTiet.addTextChangedListener { validateAndEnable() }
-
+        binding.confirmPasswordTiet.addTextChangedListener { validateAndEnable() }
     }
 
     private fun validateAndEnable() {
         val email = binding.emailTiet.text.toString().trim()
-        val password = binding.passwordTiet.text.toString().trim()
+        val pass = binding.passwordTiet.text.toString().trim()
+        val confirm = binding.confirmPasswordTiet.text.toString().trim()
 
         binding.emailTil.error = viewModel.validateEmail(email)
-        binding.passwordTil.error = viewModel.validatePassword(password)
-        binding.signInButton.isEnabled = viewModel.isLoginFormValid(email, password)
+        binding.passwordTil.error = viewModel.validatePassword(pass)
+        binding.confirmPasswordTil.error =
+            viewModel.validateConfirmPassword(pass, confirm)
+
+        binding.signUpButton.isEnabled =
+            viewModel.isRegisterFormValid(email, pass, confirm)
     }
+
 
     private fun setupClickListeners() {
-        binding.signInButton.setOnClickListener {
+        binding.signUpButton.setOnClickListener {
             val email = binding.emailTiet.text.toString().trim()
             val password = binding.passwordTiet.text.toString().trim()
-            viewModel.requestLogin(email, password)
+            viewModel.requestSignUp(email, password)
         }
-        binding.registerText.setOnClickListener {
-            findNavController()
-                .navigate(R.id.action_loginFragment_to_registerFragment)
+        binding.registerText.setOnClickListener{ //ya tienes cuenta? inicia sesion
+            findNavController().navigateUp()
         }
     }
-
-    /*
-    private fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-    */
 
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.signInState.collect { state ->
+                viewModel.registerState.collect { state ->
                     when (state) {
                         is ResponseService.Loading -> {
                             communicator.manageLoader(true)
-                            binding.signInButton.isEnabled = false
+                            binding.signUpButton.isEnabled = false
                         }
-
                         is ResponseService.Success -> {
                             communicator.manageLoader(false)
-                            val intent = Intent(requireContext(), HomeActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
+                            //binding.signUpButton.isEnabled = false
+                            // TODO: navegar a pantalla de datos personales
                         }
-
                         is ResponseService.Error -> {
                             communicator.manageLoader(false)
-                            binding.signInButton.isEnabled = true
-                            Snackbar.make(
-                                binding.root, state.error,
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            binding.signUpButton.isEnabled = true
+                            Snackbar.make(binding.root, state.error,
+                                Snackbar.LENGTH_LONG).show()
                         }
-
                         null -> Unit
                     }
                 }

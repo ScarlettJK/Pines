@@ -1,28 +1,39 @@
-package com.example.pines.signup
+package com.example.pines.onboarding.signIn
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.pines.SignInViewModel
+import com.example.pines.R
+import com.example.pines.onboarding.signIn.SignInViewModel
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
-import com.example.pines.databinding.FragmentRegisterBinding
+import com.example.pines.databinding.FragmentLoginBinding
+import com.example.pines.home.HomeActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
-class RegisterFragment : Fragment() {
+class LoginFragment : Fragment() {
 
-    private var _binding : FragmentRegisterBinding? = null
+
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<RegisterViewModel>()
+    private val viewModel by viewModels<SignInViewModel>()
     private lateinit var communicator: FragmentCommunicator
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
 
     override fun onCreateView(
@@ -30,69 +41,77 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        //Implementacion communicator
         communicator = requireActivity() as FragmentCommunicator
         setupValidation()
         setupClickListeners()
         observeState()
+
         return binding.root
     }
 
-
     private fun setupValidation() {
-        binding.signUpButton.isEnabled = false
-        val watcher = { validateAndEnable() }
+        binding.signInButton.isEnabled = false
         binding.emailTiet.addTextChangedListener { validateAndEnable() }
         binding.passwordTiet.addTextChangedListener { validateAndEnable() }
-        binding.confirmPasswordTiet.addTextChangedListener { validateAndEnable() }
+
     }
 
     private fun validateAndEnable() {
         val email = binding.emailTiet.text.toString().trim()
-        val pass = binding.passwordTiet.text.toString().trim()
-        val confirm = binding.confirmPasswordTiet.text.toString().trim()
+        val password = binding.passwordTiet.text.toString().trim()
 
         binding.emailTil.error = viewModel.validateEmail(email)
-        binding.passwordTil.error = viewModel.validatePassword(pass)
-        binding.confirmPasswordTil.error =
-            viewModel.validateConfirmPassword(pass, confirm)
-
-        binding.signUpButton.isEnabled =
-            viewModel.isRegisterFormValid(email, pass, confirm)
+        binding.passwordTil.error = viewModel.validatePassword(password)
+        binding.signInButton.isEnabled = viewModel.isLoginFormValid(email, password)
     }
-
 
     private fun setupClickListeners() {
-        binding.signUpButton.setOnClickListener {
+        binding.signInButton.setOnClickListener {
             val email = binding.emailTiet.text.toString().trim()
             val password = binding.passwordTiet.text.toString().trim()
-            viewModel.requestSignUp(email, password)
+            viewModel.requestLogin(email, password)
         }
-        binding.registerText.setOnClickListener{ //ya tienes cuenta? inicia sesion
-            findNavController().navigateUp()
+        binding.registerText.setOnClickListener {
+            findNavController()
+                .navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
+
+    /*
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+    */
 
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.registerState.collect { state ->
+                viewModel.signInState.collect { state ->
                     when (state) {
                         is ResponseService.Loading -> {
                             communicator.manageLoader(true)
-                            binding.signUpButton.isEnabled = false
+                            binding.signInButton.isEnabled = false
                         }
+
                         is ResponseService.Success -> {
                             communicator.manageLoader(false)
-                            //binding.signUpButton.isEnabled = false
-                            // TODO: navegar a pantalla de datos personales
+                            val intent = Intent(requireContext(), HomeActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
                         }
+
                         is ResponseService.Error -> {
                             communicator.manageLoader(false)
-                            binding.signUpButton.isEnabled = true
-                            Snackbar.make(binding.root, state.error,
-                                Snackbar.LENGTH_LONG).show()
+                            binding.signInButton.isEnabled = true
+                            Snackbar.make(
+                                binding.root, state.error,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
+
                         null -> Unit
                     }
                 }
