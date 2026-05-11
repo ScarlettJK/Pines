@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.pines.R
 import androidx.navigation.fragment.findNavController
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
@@ -85,8 +86,7 @@ class RegisterFragment : Fragment() {
                         }
                         is ResponseService.Success -> {
                             communicator.manageLoader(false)
-                            //binding.signUpButton.isEnabled = false
-                            // TODO: navegar a pantalla de datos personales
+                            findNavController().navigate(R.id.action_registerFragment_to_personalInfoFragment)
                         }
                         is ResponseService.Error -> {
                             communicator.manageLoader(false)
