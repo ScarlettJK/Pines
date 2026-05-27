@@ -2,8 +2,19 @@ package com.example.pines.core.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Response (
-    @serializedName("results") val results:
+
+data class Pines(
+    @SerializedName("id")
+    val id: String,
+
+    @SerializedName("alt_description")
+    val altDescription: String?,
+
+    @SerializedName("urls")
+    val urls: Urls
 )
 
-data class
+data class Urls(
+    @SerializedName("regular")
+    val regular: String
+)

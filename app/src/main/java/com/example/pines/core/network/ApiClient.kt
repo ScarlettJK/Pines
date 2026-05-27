@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL = ""
-    const val CLIENT_ID = ""
+    private const val BASE_URL = "https://api.unsplash.com/"
+    const val CLIENT_ID = "yiEe-snJjxWe57fHrPoj5ELcjP6Gep9OGhag4YPiTJg"
 
     private val loggin = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
