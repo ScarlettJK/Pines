@@ -10,8 +10,7 @@ import kotlinx.coroutines.withContext
 class PinesRepository: PinesService {
     private val api = ApiClient.PinesApi
 
-    override suspend fun getPines(limit: Int):
-            ResponseService<List<Pines>> =
+    override suspend fun getPines(limit: Int):  ResponseService<List<Pines>> =
         withContext(Dispatchers.IO) {
             try {
                 val response = api.getPines(

@@ -8,9 +8,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavHost
 import androidx.navigation.ui.setupWithNavController
 import com.example.pines.R
+import com.example.pines.core.FragmentCommunicator
 import com.example.pines.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), FragmentCommunicator {
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -28,8 +29,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun setupNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHost
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHost
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
+
+    }
+        override fun manageLoader(isVisible: Boolean) {
+
+
     }
 }

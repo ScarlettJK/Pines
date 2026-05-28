@@ -24,7 +24,7 @@ object ApiClient {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(PinesApi::class.java)
+            .create(PinesAPI::class.java)
 
     }
 
