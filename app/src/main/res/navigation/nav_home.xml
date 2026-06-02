@@ -23,5 +23,14 @@
         android:name="com.example.pines.home.boards.BoardsFragment"
         android:label="fragment_boards"
         tools:layout="@layout/fragment_boards" />
+    <fragment
+        android:id="@+id/pinDetailFragment"
+        android:name="com.example.pines.home.detail.PinDetailFragment"
+        android:label="fragment_pin_detail"
+        tools:layout="@layout/fragment_pin_detail" />
+
+    <argument
+        android:name="pin"
+        app:argType="com.example.pines.core.repositories.model.pin"
 
 </navigation>

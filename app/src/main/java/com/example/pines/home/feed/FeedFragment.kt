@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pines.R
 import com.example.pines.core.FragmentCommunicator
@@ -25,7 +26,8 @@ class FeedFragment : Fragment() {
     private val viewModel by viewModels<FeedViewModel>()
     private lateinit var communicator: FragmentCommunicator
     private val adapter = FeedAdapter { pin ->
-
+        val bundle = Bundle().apply { putParcelable("pin", pin) }
+        findNavController().navigate(R.id.action_feedFragment_to_pinDetailFragment, bundle)
     }
 
     override fun onCreateView(
