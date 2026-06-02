@@ -7,11 +7,16 @@ data class Pines(
     @SerializedName("id")
     val id: String,
 
-    @SerializedName("alt_description")
-    val altDescription: String?,
+    @SerializedName("alternative_slugs")
+    val alternativeSlugs: AlternativeSlugs,
 
     @SerializedName("urls")
     val urls: Urls
+)
+
+data class AlternativeSlugs(
+    @SerializedName("en")
+    val en: String
 )
 
 data class Urls(

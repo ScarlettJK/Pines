@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 class PinesRepository: PinesService {
     private val api = ApiClient.PinesApi
 
-    override suspend fun getPines(limit: Int):  ResponseService<List<Pines>> =
+    override suspend fun getPines(limit: Int): ResponseService<List<Pines>> =
         withContext(Dispatchers.IO) {
             try {
                 val response = api.getPines(
@@ -22,14 +22,14 @@ class PinesRepository: PinesService {
                     if (body != null) {
                         ResponseService.Success(body)
                     } else {
-                        ResponseService.Error("Respuesta vacia del servidor")
+                        ResponseService.Error("Respuesta vacía del servidor")
                     }
                 } else {
-                    ResponseService.Error("Error \${response.code()}: \${response.message()}")
+                    ResponseService.Error("Error ${response.code()}: ${response.message()}")
                 }
             } catch (e: Exception) {
                 ResponseService.Error(
-                    "No se pudieron cargar las imagenes: \${e.localizedMessage}"
+                    "No se pudieron cargar las imagenes: ${e.localizedMessage}"
                 )
             }
         }

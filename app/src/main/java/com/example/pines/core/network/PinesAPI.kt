@@ -9,8 +9,8 @@ interface PinesAPI {
     @GET("photos")
     suspend fun getPines(
         @Query("client_id") clientId: String,
-        @Query("format") format: String = "json",
+        //@Query("format") format: String = "json",
         @Query("per_page") limit: Int = 20
-        //): Response<List<Pines>>
-    ): Response<Pines>
+        ): Response<List<Pines>>
+    //): Response<Pines>
 }

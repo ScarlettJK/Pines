@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pines.R
 import com.example.pines.core.FragmentCommunicator
 import com.example.pines.core.ResponseService
@@ -23,6 +24,9 @@ class FeedFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<FeedViewModel>()
     private lateinit var communicator: FragmentCommunicator
+    private val adapter = FeedAdapter { pin ->
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +35,10 @@ class FeedFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
         communicator = requireActivity() as FragmentCommunicator
+
+        binding.rvPines.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPines.adapter = adapter
+
         observeState()
         viewModel.loadPines()
         return binding.root
@@ -46,7 +54,7 @@ class FeedFragment : Fragment() {
                         }
                         is ResponseService.Success -> {
                             communicator.manageLoader(false)
-                            Log.i("Pines", "Pines List: $(state.data)")
+                            adapter.submitList(state.data)
                         }
                         is ResponseService.Error -> {
                             communicator.manageLoader(false)
