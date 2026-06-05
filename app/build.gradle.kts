@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
-    //SE AÑADE FIREBASE - se agrega plugim
+
     alias(libs.plugins.firebase)
-    alias(libs.plugins.kotlin.parcelize)
+
 
 }
 
@@ -16,8 +16,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.pines"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = 30
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -38,7 +38,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    //BULDING FEATURES 07/04/2026
+    //BUILDING FEATURES 07/04/2026
     buildFeatures {
         viewBinding = true
     }
@@ -53,8 +53,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,8 +71,4 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.glide)
 
-
-
-
-//
 }
