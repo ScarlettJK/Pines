@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     //SE AÑADE FIREBASE - se agrega plugim
     alias(libs.plugins.firebase)
+    alias(libs.plugins.kotlin.parcelize)
+
 }
 
 android {
@@ -51,6 +53,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -68,6 +72,7 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
     implementation(libs.glide)
+
 
 
 

@@ -18,6 +18,8 @@ import com.example.pines.core.ResponseService
 import com.example.pines.databinding.FragmentFeedBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.pines.core.model.Pines
 
 class FeedFragment : Fragment() {
 
@@ -38,7 +40,12 @@ class FeedFragment : Fragment() {
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
         communicator = requireActivity() as FragmentCommunicator
 
-        binding.rvPines.layoutManager = LinearLayoutManager(requireContext())
+        //binding.rvPines.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPines.layoutManager =
+            StaggeredGridLayoutManager(
+                2,
+                StaggeredGridLayoutManager.VERTICAL
+            )
         binding.rvPines.adapter = adapter
 
         observeState()

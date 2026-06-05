@@ -10,7 +10,13 @@
         android:id="@+id/feedFragment"
         android:name="com.example.pines.home.feed.FeedFragment"
         android:label="fragment_feed"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed">
+
+        <action
+            android:id="@+id/action_feedFragment_to_pinDetailFragment"
+            app:destination="@id/pinDetailFragment"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/accountFragment"
@@ -27,10 +33,12 @@
         android:id="@+id/pinDetailFragment"
         android:name="com.example.pines.home.detail.PinDetailFragment"
         android:label="fragment_pin_detail"
-        tools:layout="@layout/fragment_pin_detail" />
+        tools:layout="@layout/fragment_pin_detail" >
 
     <argument
         android:name="pin"
-        app:argType="com.example.pines.core.repositories.model.pin"
+        app:argType="com.example.pines.core.repositories.model.pines"/>
+
+    </fragment>
 
 </navigation>
