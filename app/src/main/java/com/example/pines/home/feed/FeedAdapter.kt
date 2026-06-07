@@ -9,6 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.pines.core.model.Pines
 import com.example.pines.databinding.ItemPinBinding
 
+
+
 class FeedAdapter(
     private val onItemClick: (Pines) -> Unit = {}
 ) : ListAdapter<Pines, FeedAdapter.PinesViewHolder>(DIFF) {
@@ -42,6 +44,9 @@ class FeedAdapter(
                 binding.root.setOnClickListener {
                     onItemClick(pines)
                 }
+
+
+
             }
         }
 

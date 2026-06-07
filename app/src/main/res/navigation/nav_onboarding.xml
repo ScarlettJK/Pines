@@ -9,23 +9,40 @@
         android:id="@+id/loginFragment"
         android:name="com.example.pines.onboarding.signIn.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
+
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+
+        <action
+            android:id="@+id/action_loginFragment_to_recoverPasswordFragment"
+            app:destination="@id/recoverPasswordFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/recoverPasswordFragment"
+        android:name="com.example.pines.RecoverPasswordFragment"
+        android:label="fragment_recover_password"
+        tools:layout="@layout/fragment_recover_password" />
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.pines.onboarding.signUp.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
+
         <action
             android:id="@+id/action_registerFragment_to_personalInfoFragment"
             app:destination="@id/personalInfoFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/personalInfoFragment"
         android:name="com.example.pines.onboarding.personal.PersonalInfoFragment"
         android:label="fragment_personal_info"
         tools:layout="@layout/fragment_personal_info" />
+
 </navigation>

@@ -78,6 +78,13 @@ class LoginFragment : Fragment() {
             findNavController()
                 .navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
+        binding.txtRecuperar.setOnClickListener {
+
+            findNavController().navigate(
+                R.id.action_loginFragment_to_recoverPasswordFragment
+            )
+        }
     }
 
     /*

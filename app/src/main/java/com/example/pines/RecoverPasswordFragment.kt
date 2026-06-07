@@ -1,59 +1,112 @@
 package com.example.pines
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.pines.databinding.FragmentRecoverPasswordBinding
+import com.google.firebase.auth.FirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecoverPasswordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RecoverPasswordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentRecoverPasswordBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        _binding =
+            FragmentRecoverPasswordBinding.inflate(
+                inflater,
+                container,
+                false
+            )
+
+        return binding.root
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+
+        super.onViewCreated(
+            view,
+            savedInstanceState
+        )
+
+        binding.btnBack.setOnClickListener {
+
+            findNavController().navigateUp()
+        }
+
+        binding.btnRecuperar.setOnClickListener {
+
+            sendRecoveryEmail()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recover_password, container, false)
+    private fun sendRecoveryEmail() {
+
+        val email =
+            binding.emailTiet.text
+                .toString()
+                .trim()
+
+        if (email.isEmpty()) {
+
+            Toast.makeText(
+                requireContext(),
+                "Ingresa un correo",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+
+            Toast.makeText(
+                requireContext(),
+                "Correo inválido",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        FirebaseAuth
+            .getInstance()
+            .sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Correo enviado",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                findNavController().navigateUp()
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(
+                    requireContext(),
+                    it.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecoverPasswordFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecoverPasswordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

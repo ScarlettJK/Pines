@@ -28,7 +28,10 @@ class FeedFragment : Fragment() {
     private val viewModel by viewModels<FeedViewModel>()
     private lateinit var communicator: FragmentCommunicator
     private val adapter = FeedAdapter { pin ->
-        val bundle = Bundle().apply { putParcelable("pin", pin) }
+        //val bundle = Bundle().apply { putParcelable("pin", pin) }
+        val bundle = Bundle().apply {
+            putSerializable("pin", pin)
+        }
         findNavController().navigate(R.id.action_feedFragment_to_pinDetailFragment, bundle)
     }
 

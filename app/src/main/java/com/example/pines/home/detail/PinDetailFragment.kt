@@ -16,6 +16,17 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
+import android.content.Intent
+import android.widget.PopupMenu
+import android.widget.Toast
+
+import android.app.AlertDialog
+
+import com.example.pines.home.boards.Board
+
+import com.example.pines.core.repositories.BoardRepository
+import com.example.pines.core.repositories.PinRepository
+
 class PinDetailFragment : Fragment() {
 
     private var _binding: FragmentPinDetailBinding? = null
@@ -27,7 +38,15 @@ class PinDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pin = requireArguments().getParcelable("pin")
+        //pin = requireArguments().getParcelable("pin")
+            ?: error("pin argument required")
+
+        android.util.Log.d(
+            "PIN_DETAIL",
+            "Fragment creado"
+        )
+
+        pin = arguments?.getSerializable("pin") as? Pines
             ?: error("pin argument required")
     }
 
@@ -87,6 +106,69 @@ class PinDetailFragment : Fragment() {
             viewModel.toggleLike()
         }
 
+        binding.btnOptions.setOnClickListener {
+
+
+            val popupMenu =
+                PopupMenu(requireContext(), binding.btnOptions)
+
+            popupMenu.menuInflater.inflate(
+                R.menu.pin_options_menu,
+                popupMenu.menu
+            )
+
+
+            for (i in 0 until popupMenu.menu.size()) {
+
+                val item = popupMenu.menu.getItem(i)
+
+                val spannable = android.text.SpannableString(item.title)
+
+                spannable.setSpan(
+                    android.text.style.ForegroundColorSpan(
+                        resources.getColor(R.color.purple, null)
+                    ),
+                    0,
+                    spannable.length,
+                    0
+                )
+
+                item.title = spannable
+            }
+
+
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_save_board -> {
+                        showBoardsDialog()
+                        Toast.makeText(
+                            requireContext(),
+                            "Guardar en Board",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+
+                    R.id.action_share -> {
+                        sharePin()
+                        true
+                    }
+
+                    R.id.action_download -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Descargando imagen...",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
     }
 
     private fun observeViewModel() {
@@ -117,6 +199,81 @@ class PinDetailFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun sharePin() {
+
+        val intent = Intent().apply {
+
+            action = Intent.ACTION_SEND
+
+            putExtra(
+                Intent.EXTRA_TEXT,
+                pin.urls.regular
+            )
+
+            type = "text/plain"
+        }
+
+        startActivity(
+            Intent.createChooser(
+                intent,
+                "Compartir pin"
+            )
+        )
+    }
+
+    private fun showBoardsDialog() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            val boards =
+                BoardRepository().getBoards()
+
+            if (boards.isEmpty()) {
+                return@launch
+            }
+
+            val names =
+                boards.map { it.name }
+                    .toTypedArray()
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("Guardar en carpeta")
+                .setItems(names) { _, which ->
+
+                    val board =
+                        boards[which]
+
+                    savePin(board)
+                }
+                .show()
+        }
+    }
+
+    private fun savePin(
+        board: Board
+    ) {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+
+            PinRepository()
+                .savePinToBoard(
+                    board.id,
+                    pin
+                )
+
+            BoardRepository()
+                .increasePinCount(
+                    board.id
+                )
+
+            Toast.makeText(
+                requireContext(),
+                "Guardado en ${board.name}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

@@ -1,63 +1,62 @@
 package com.example.pines.core.model
 
 //import android.os.Parcelable
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+//import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
-
-@Parcelize
+//@Parcelize
 data class Pines(
 
     @SerializedName("id")
-    val id: String,
+    val id: String = "",
 
     @SerializedName("likes")
-    val likes: Int,
+    val likes: Int = 0,
 
     @SerializedName("liked_by_user")
-    val likedByUser: Boolean,
+    val likedByUser: Boolean = false,
 
     @SerializedName("alt_description")
-    val altDescription: String?,
+    val altDescription: String? = null,
 
     @SerializedName("alternative_slugs")
-    val alternativeSlugs: AlternativeSlugs,
+    val alternativeSlugs: AlternativeSlugs = AlternativeSlugs(),
 
     @SerializedName("urls")
-    val urls: Urls,
+    val urls: Urls = Urls(),
 
     @SerializedName("user")
-    val user: User
+    val user: User = User()
 
-) : Parcelable
+) : Serializable /*Parcelable*/
 
-@Parcelize
+//@Parcelize
 data class AlternativeSlugs(
 
     @SerializedName("en")
-    val en: String
+    val en: String = ""
 
-) : Parcelable
+) : Serializable /*Parcelable*/
 
-@Parcelize
+//@Parcelize
 data class Urls(
 
     @SerializedName("regular")
-    val regular: String
+    val regular: String = ""
 
-) : Parcelable
+) : Serializable /*Parcelable*/
 
-@Parcelize
+//@Parcelize
 data class User(
 
     @SerializedName("username")
-    val username: String,
+    val username: String = "",
 
     @SerializedName("name")
-    val name: String,
+    val name: String = "",
 
     @SerializedName("location")
-    val location: String?
+    val location: String? = null
 
-) : Parcelable
+) : Serializable /*Parcelable*/

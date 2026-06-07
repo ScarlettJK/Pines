@@ -20,7 +20,7 @@ class PersonalInfoViewModel: ViewModel() {
 
     fun validateFirstName(value: String): String? {
         if (value.isBlank()) return "El nombre es requerido"
-        if (value.length > 2) return  "Mínimo 2 caracteres"
+        if (value.length < 2) return  "Mínimo 2 caracteres"
         if (!value.all { it.isLetter() || it.isWhitespace() })
             return "Solo se permiten letras"
         return null
@@ -28,7 +28,7 @@ class PersonalInfoViewModel: ViewModel() {
 
     fun validateLastName(value: String): String? {
         if (value.isBlank()) return "Los apellidos son requeridos"
-        if (value.length > 2) return  "Mínimo 2 caracteres"
+        if (value.length < 2) return  "Mínimo 2 caracteres"
         if (!value.all { it.isLetter() || it.isWhitespace() })
             return "Solo se permiten letras"
         return null
@@ -65,11 +65,19 @@ class PersonalInfoViewModel: ViewModel() {
                 validateBirthDate(birthDate) == null
     }
 
-    fun saveProfile(uid: String, firstName: String, lastName: String,
-        username: String, phone: String, birthDate: String) {
+    fun saveProfile(
+        uid: String,
+        firstName: String,
+        lastName: String,
+        username: String,
+        phone: String,
+        birthDate: String
+    ) {
         viewModelScope.launch {
             _saveState.value = ResponseService.Loading
-            val user = UserProfile(
+
+            val user =
+                UserProfile(
                 id = uid,
                 firstName = firstName,
                 lastName = lastName,
@@ -77,8 +85,10 @@ class PersonalInfoViewModel: ViewModel() {
                 phone = phone,
                 birthDate = birthDate
             )
-            _saveState
+            _saveState.value =
+                repository.saveUserInfo(user)
         }
     }
+
 
 }

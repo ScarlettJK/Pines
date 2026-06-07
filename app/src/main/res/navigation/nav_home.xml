@@ -28,17 +28,37 @@
         android:id="@+id/boardsFragment"
         android:name="com.example.pines.home.boards.BoardsFragment"
         android:label="fragment_boards"
-        tools:layout="@layout/fragment_boards" />
+        tools:layout="@layout/fragment_boards">
+
+        <action
+            android:id="@+id/action_boardsFragment_to_boardDetailFragment"
+            app:destination="@id/boardDetailFragment"/>
+
+    </fragment>
+
+
+
     <fragment
         android:id="@+id/pinDetailFragment"
         android:name="com.example.pines.home.detail.PinDetailFragment"
         android:label="fragment_pin_detail"
-        tools:layout="@layout/fragment_pin_detail" >
+        tools:layout="@layout/fragment_pin_detail" />
 
-    <argument
+    <!-- <argument
         android:name="pin"
         app:argType="com.example.pines.core.repositories.model.pines"/>
+    -->
+    <!--
+        <argument
+        android:name="pin"
+        app:argType="com.example.pines.core.model.Pines"/>
+    -->
 
-    </fragment>
+
+    <fragment
+        android:id="@+id/boardDetailFragment"
+        android:name="com.example.pines.home.boards.BoardDetailFragment"
+        android:label="fragment_board_detail"
+        tools:layout="@layout/fragment_board_detail"/>
 
 </navigation>

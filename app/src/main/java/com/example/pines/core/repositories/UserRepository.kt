@@ -22,4 +22,23 @@ class UserRepository: UserService {
             ResponseService.Error("No se pudo crear el perfil: ${e.localizedMessage}")
         }
     }
+
+    suspend fun getUserProfile(
+        uid: String
+    ): UserProfile? {
+
+        return try {
+
+            firestore.collection("users")
+                .document(uid)
+                .get()
+                .await()
+                .toObject(UserProfile::class.java)
+
+        } catch (e: Exception) {
+
+            null
+        }
+    }
+
 }
